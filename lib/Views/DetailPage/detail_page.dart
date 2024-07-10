@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:e_commerce_app/ApiCalling/Controller/ProductController/product_controlller.dart';
+import 'package:e_commerce_app/exe.dart';
+import 'package:e_commerce_app/utils/app_routes_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,7 @@ class DetailPage extends StatelessWidget {
     int index = ModalRoute.of(context)!.settings.arguments as int;
     ProductController mutable = Provider.of<ProductController>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           '${mutable.allProducts[index].title}',
@@ -22,12 +25,19 @@ class DetailPage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.cartPage);
+              },
+              icon: Icon(Icons.shopping_cart_checkout_rounded)),
+        ],
       ),
       body: Column(
         children: [
           CarouselSlider(
             options: CarouselOptions(
-              height: size.height * 0.4,
+              height: size.height * 0.3,
               enlargeCenterPage: true,
               autoPlay: true,
               aspectRatio: 16 / 9,
@@ -38,10 +48,10 @@ class DetailPage extends StatelessWidget {
             ),
             items: List.generate(
                 mutable.allProducts[index].images.length,
-                (index) => Container(
+                (i) => Container(
                       child: Center(
                         child: Image.network(
-                            mutable.allProducts[index].images[index],
+                            mutable.allProducts[index].images[i],
                             fit: BoxFit.cover,
                             width: 1000),
                       ),
@@ -87,67 +97,234 @@ class DetailPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  Text(
-                    '${mutable.allProducts[index].description}',
-                    // maxLines: 4,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      RatingBar.builder(
+                        initialRating: mutable.allProducts[index].rating,
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        itemSize: size.height * 0.035,
+                        onRatingUpdate: (rating) {},
+                      ),
+                      SizedBox(
+                        width: size.width * 0.01,
+                      ),
+                      Text(
+                        '(${mutable.allProducts[index].rating})',
+                        maxLines: 3,
+                        style: TextStyle(
+                          color: Colors.green.shade700,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
                   ),
-                  Text(
-                    '${mutable.allProducts[index].category} Product',
-                    maxLines: 3,
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
+                  Divider(
+                    thickness: 0.6,
                   ),
-                  Text(
-                    '${mutable.allProducts[index].brand} Brand',
-                    style: const TextStyle(
-                      fontSize: 14,
+                  10.ofHeight,
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Description',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          10.ofWidth,
+                          Text(
+                            '${mutable.allProducts[index].description}',
+                            // maxLines: 4,
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          10.ofHeight,
+                          Text(
+                            'About Product',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            '${mutable.allProducts[index].category.toString().replaceFirst(mutable.allProducts[index].category[0], mutable.allProducts[index].category[0].toString().toUpperCase())} Product',
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            '${mutable.allProducts[index].brand} Brand',
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                          ),
+                          Text(
+                            '${mutable.allProducts[index].returnPolicy}',
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.blueAccent),
+                          ),
+                          5.ofHeight,
+                          Text(
+                            'Dimention',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'Width\t\t',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '\t\t${mutable.allProducts[index].dimensions.width}',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
+                                ),
+                                TextSpan(
+                                  text: '\nHeight\t\t',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '\t\t${mutable.allProducts[index].dimensions.height}',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
+                                ),
+                                TextSpan(
+                                  text: '\nDepth\t\t',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '\t\t${mutable.allProducts[index].dimensions.depth}',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.grey),
+                                ),
+                                TextSpan(
+                                  text: '\n\nReview ⭐',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ...List.generate(
+                            mutable.allProducts[index].reviews.length,
+                            (i) => ListTile(
+                              leading: CircleAvatar(
+                                maxRadius: 50,
+                                child: Icon(Icons.person),
+                              ),
+                              title: Text(
+                                  '${mutable.allProducts[index].reviews[i].reviewerName}'),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      RatingBar.builder(
+                                        initialRating: double.parse(mutable
+                                            .allProducts[index]
+                                            .reviews[i]
+                                            .rating
+                                            .toString()),
+                                        minRating: 1,
+                                        direction: Axis.horizontal,
+                                        allowHalfRating: true,
+                                        itemCount: 5,
+                                        itemBuilder: (context, _) => const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        itemSize: size.height * 0.02,
+                                        onRatingUpdate: (rating) {},
+                                      ),
+                                      4.ofWidth,
+                                      Text(
+                                        '(${mutable.allProducts[index].rating})',
+                                        maxLines: 3,
+                                        style: TextStyle(
+                                          color: Colors.green.shade700,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    '${mutable.allProducts[index].reviews[i].comment}',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Text(
-                    '${mutable.allProducts[index].returnPolicy}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                    ),
-                  ),
-                  RatingBar.builder(
-                    initialRating: mutable.allProducts[index].rating,
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    itemSize: size.height * 0.035,
-                    onRatingUpdate: (rating) {},
-                  ),
+                  )
                 ],
               ),
             ),
           ),
-
-          // ElevatedButton(
-          //   onPressed: () {
-          //     // add to cart logic here
-          //     ScaffoldMessenger.of(context).showSnackBar(
-          //       SnackBar(content: Text('Added to cart!')),
-          //     );
-          //   },
-          //   child: Text('Add to Cart'),
-          // ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
-        label: Text('Add To Cart'),
-        icon: Icon(Icons.add_shopping_cart_rounded),
+        onPressed: () {
+          mutable.cartProducts.contains(mutable.allProducts[index])
+              ? ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text('Remove from Cart!'),
+                  backgroundColor: Colors.red,
+                ))
+              : ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Added to Cart!'),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+          mutable.cartProducts.contains(mutable.allProducts[index])
+              ? mutable.cartProducts.remove(mutable.allProducts[index])
+              : mutable.cartProducts.add(mutable.allProducts[index]);
+          mutable.notify();
+        },
+        label: Text(
+            '${mutable.cartProducts.contains(mutable.allProducts[index]) ? 'Remove From Cart' : 'Add to Cart'}'),
+        icon: Icon(
+          mutable.cartProducts.contains(mutable.allProducts[index])
+              ? Icons.remove_shopping_cart_rounded
+              : Icons.add_shopping_cart_rounded,
+        ),
       ),
     );
   }

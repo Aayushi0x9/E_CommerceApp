@@ -5,13 +5,26 @@ import 'package:flutter/foundation.dart';
 class ProductController extends ChangeNotifier {
   List<Product> allProducts = [];
   List<Product> cartProducts = [];
+  List<Product> category = [];
+  List<Product> allCategory = [];
+  List<Product> likedProducts = [];
 
   ProductController() {
     loadAllProductData();
   }
 
+  Future<dynamic> categoryProducts() async {
+    category = allProducts.map((e) => e.category).cast<Product>().toList();
+    allCategory = category.toSet().toList();
+    notifyListeners();
+  }
+
   Future<void> loadAllProductData() async {
     allProducts = await ProductHelper.productHelper.getAllProduct();
+    notifyListeners();
+  }
+
+  void notify() {
     notifyListeners();
   }
 
