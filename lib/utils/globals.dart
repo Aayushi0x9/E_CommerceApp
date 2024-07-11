@@ -1,4 +1,6 @@
 class Globals {
-  String SearchData = '';
+  String SearchData = 'All';
+
+  String Selected = 'All';
   static Globals globals = Globals();
 }
