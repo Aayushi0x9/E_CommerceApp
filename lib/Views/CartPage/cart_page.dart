@@ -54,109 +54,120 @@ class CartPage extends StatelessWidget {
                                 }),
                           ],
                         ),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          height: size.height * 0.2,
-                          width: size.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade400,
-                                  offset: const Offset(3, 3),
-                                  blurRadius: 5,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRoutes.detailPage,
+                                arguments: index);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.only(bottom: 12),
+                            height: size.height * 0.2,
+                            width: size.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.shade400,
+                                    offset: const Offset(3, 3),
+                                    blurRadius: 5,
+                                  ),
+                                ]),
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 2,
+                                  child: Image.network(
+                                    mutable.cartProducts[index].thumbnail,
+                                  ),
                                 ),
-                              ]),
-                          padding: const EdgeInsets.all(10),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 2,
-                                child: Image.network(
-                                  mutable.cartProducts[index].thumbnail,
-                                ),
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${mutable.cartProducts[index].title}',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                    ),
-                                    Text(
-                                      '${mutable.allProducts[index].price} \$',
-                                      style: TextStyle(
-                                          color: Colors.green.shade400,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      mutable.allProducts[index].returnPolicy,
-                                      style:
-                                          const TextStyle(color: Colors.grey),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    SizedBox(height: size.height * 0.01),
-                                    Container(
-                                      padding: const EdgeInsets.all(5),
-                                      height: size.height * 0.05,
-                                      width: size.width * 0.3,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(50),
-                                        border: Border.all(
-                                          color: Colors.grey,
-                                          width: 1,
-                                        ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${mutable.cartProducts[index].title}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
                                       ),
-                                      child: Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                mutable.cartProducts[index].id =
-                                                    0;
-                                                if (mutable.cartProducts[index]
-                                                        .id <
-                                                    mutable.cartProducts[index]
-                                                        .stock) {
-                                                  mutable
-                                                      .cartProducts[index].id++;
-                                                }
-                                              },
-                                              icon: const Icon(
-                                                  CupertinoIcons.plus_circle)),
-                                          Text(
-                                            '${mutable.cartProducts[index].id}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                      Text(
+                                        '${mutable.allProducts[index].price} \$',
+                                        style: TextStyle(
+                                            color: Colors.green.shade400,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        mutable.allProducts[index].returnPolicy,
+                                        style:
+                                            const TextStyle(color: Colors.grey),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      SizedBox(height: size.height * 0.01),
+                                      Container(
+                                        padding: const EdgeInsets.all(5),
+                                        height: size.height * 0.05,
+                                        width: size.width * 0.3,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          border: Border.all(
+                                            color: Colors.grey,
+                                            width: 1,
                                           ),
-                                          IconButton(
-                                              onPressed: () {
-                                                int n = mutable
-                                                    .cartProducts[index].id = 0;
-                                                if (n > 1) {
-                                                  n--;
-                                                }
-                                              },
-                                              icon: const Icon(
-                                                  CupertinoIcons.minus_circle)),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  mutable.cartProducts[index]
+                                                      .id = 0;
+                                                  if (mutable
+                                                          .cartProducts[index]
+                                                          .id <
+                                                      mutable
+                                                          .cartProducts[index]
+                                                          .stock) {
+                                                    mutable.cartProducts[index]
+                                                        .id++;
+                                                  }
+                                                },
+                                                icon: const Icon(CupertinoIcons
+                                                    .plus_circle)),
+                                            Text(
+                                              '${mutable.cartProducts[index].id}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            IconButton(
+                                                onPressed: () {
+                                                  int n = mutable
+                                                      .cartProducts[index]
+                                                      .id = 0;
+                                                  if (n > 1) {
+                                                    n--;
+                                                  }
+                                                },
+                                                icon: const Icon(CupertinoIcons
+                                                    .minus_circle)),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ))

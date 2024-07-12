@@ -8,9 +8,7 @@ import 'package:logger/logger.dart';
 class ProductHelper {
   ProductHelper._();
   static ProductHelper productHelper = ProductHelper._();
-
-  String productsApi =
-      'https://dummyjson.com/products/search?q=${Globals.globals.SearchData}';
+  String productsApi = 'https://dummyjson.com/products?limit=100';
   Future<List<Product>> getAllProduct() async {
     List<Product> allProduct = [];
     http.Response response = await http.get(Uri.parse(productsApi));

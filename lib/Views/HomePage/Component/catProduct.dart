@@ -2,12 +2,18 @@ import 'package:e_commerce_app/utils/app_routes_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-Widget allProduct(
+Widget allCategoryProduct(
     {required BuildContext context,
     required index,
     required Size size,
-    required mutable}) {
-  return GestureDetector(
+    required mutable,
+    required Selected}) {
+  print('${mutable.allProducts[index].category}');
+  print('${Selected}');
+  return
+      // Selected == mutable.allProduct[index].category
+      //   ?
+      GestureDetector(
     onTap: () {
       Navigator.pushNamed(context, AppRoutes.detailPage, arguments: index);
     },
@@ -96,4 +102,5 @@ Widget allProduct(
       ],
     ),
   );
+  // : Container();
 }

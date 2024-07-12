@@ -1,11 +1,14 @@
 import 'package:e_commerce_app/ApiCalling/Services/product_helper.dart';
 import 'package:e_commerce_app/Models/product_model.dart';
-import 'package:flutter/foundation.dart';
+import 'package:e_commerce_app/Views/AccountPAge/accountpage.dart';
+import 'package:e_commerce_app/Views/CartPage/cart_page.dart';
+import 'package:e_commerce_app/Views/HomePage/home_page.dart';
+import 'package:e_commerce_app/Views/LikedPage/likedpage.dart';
+import 'package:flutter/material.dart';
 
 class ProductController extends ChangeNotifier {
   List<Product> allProducts = [];
   List<Product> cartProducts = [];
-  List<Product> allcat = [];
 
   List<Product> likedProducts = [];
 
@@ -20,6 +23,40 @@ class ProductController extends ChangeNotifier {
 
   void notify() {
     notifyListeners();
+  }
+
+  void onItemTapped(
+      {required index,
+      required BuildContext context,
+      required dynamic selectedIndex}) {
+    selectedIndex = index;
+    notifyListeners();
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => CartPage()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LikedPage()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AccountPage()),
+        );
+        break;
+    }
   }
 
   List images = [

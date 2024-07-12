@@ -6,7 +6,10 @@ Widget allProduct(
     {required BuildContext context,
     required index,
     required Size size,
-    required mutable}) {
+    required mutable,
+    required slidervalue}) {
+  print('${mutable.allProducts[index].category}');
+
   return GestureDetector(
     onTap: () {
       Navigator.pushNamed(context, AppRoutes.detailPage, arguments: index);
@@ -57,18 +60,51 @@ Widget allProduct(
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              RatingBar.builder(
-                initialRating: mutable.allProducts[index].rating,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                itemSize: size.height * 0.025,
-                onRatingUpdate: (rating) {},
+              Row(
+                children: [
+                  RatingBar.builder(
+                    initialRating: mutable.allProducts[index].rating,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                    ),
+                    itemSize: size.height * 0.025,
+                    onRatingUpdate: (ra) {},
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      mutable.likedProducts.contains(mutable.allProducts[index])
+                          ? ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                              content: Text('Remove from Favourite!'),
+                              backgroundColor: Colors.red,
+                            ))
+                          : ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Added to Favourite!'),
+                                backgroundColor: Colors.green,
+                              ),
+                            );
+                      mutable.likedProducts.contains(mutable.allProducts[index])
+                          ? mutable.likedProducts
+                              .remove(mutable.allProducts[index])
+                          : mutable.likedProducts
+                              .add(mutable.allProducts[index]);
+                      mutable.notify();
+                    },
+                    icon: Icon(
+                      Icons.favorite_rounded,
+                    ),
+                    color: mutable.likedProducts
+                            .contains(mutable.allProducts[index])
+                        ? Colors.red
+                        : Colors.black54,
+                  ),
+                ],
               ),
             ],
           ),
