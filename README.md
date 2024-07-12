@@ -1,7 +1,6 @@
 # e_commerce_app
 ## ScreenShots
-  <img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/b0d4649b-8775-4581-804f-b205c4375c00" width="250" height="550"> 
- <img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/ba45d8c8-1ddc-4b06-9337-5f5bf508d8bf" width="250" height="550">
+<img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/ba45d8c8-1ddc-4b06-9337-5f5bf508d8bf" width="250" height="550">
  <img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/30d00d0c-f5ac-440f-9ce9-d1fe6014035d" width="250" height="550">
  <img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/7050c0b9-d81c-4793-8a02-e81485855916" width="250" height="550">
  <img src="https://github.com/Aayushi0x9/E_CommerceApp/assets/143987694/d2602284-e958-4fba-9e4c-324930060b8b" width="250" height="550">
