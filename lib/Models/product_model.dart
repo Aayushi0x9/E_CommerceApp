@@ -21,6 +21,7 @@ class Product {
   Meta meta;
   List<String> images;
   String thumbnail;
+  int qty = 1;
 
   Product({
     required this.id,
@@ -45,6 +46,7 @@ class Product {
     required this.meta,
     required this.images,
     required this.thumbnail,
+    qty,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(

@@ -30,7 +30,7 @@ class DetailPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, AppRoutes.cartPage);
               },
-              icon: Icon(Icons.shopping_cart_checkout_rounded)),
+              icon: const Icon(Icons.shopping_cart_checkout_rounded)),
         ],
       ),
       body: Column(
@@ -43,7 +43,7 @@ class DetailPage extends StatelessWidget {
               aspectRatio: 16 / 9,
               autoPlayCurve: Curves.fastOutSlowIn,
               enableInfiniteScroll: true,
-              autoPlayAnimationDuration: Duration(milliseconds: 800),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
               viewportFraction: 0.8,
             ),
             items: List.generate(
@@ -57,13 +57,14 @@ class DetailPage extends StatelessWidget {
                       ),
                     )).toList(),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: Container(
-              padding: EdgeInsets.all(46),
+              padding: const EdgeInsets.all(46),
               width: size.width,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(45)),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -78,12 +79,14 @@ class DetailPage extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${mutable.allProducts[index].title}',
-                        maxLines: 3,
-                        style: const TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          '${mutable.allProducts[index].title}',
+                          maxLines: 3,
+                          style: const TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       Text(
@@ -126,7 +129,7 @@ class DetailPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 0.6,
                   ),
                   10.ofHeight,
@@ -136,9 +139,9 @@ class DetailPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Description',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -154,7 +157,7 @@ class DetailPage extends StatelessWidget {
                             ),
                           ),
                           10.ofHeight,
-                          Text(
+                          const Text(
                             'About Product',
                             style: TextStyle(
                               fontSize: 16,
@@ -179,9 +182,9 @@ class DetailPage extends StatelessWidget {
                                 fontSize: 14, color: Colors.blueAccent),
                           ),
                           5.ofHeight,
-                          Text(
+                          const Text(
                             'Dimention',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -189,7 +192,7 @@ class DetailPage extends StatelessWidget {
                           RichText(
                             text: TextSpan(
                               children: [
-                                TextSpan(
+                                const TextSpan(
                                   text: 'Width\t\t',
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.black),
@@ -197,10 +200,10 @@ class DetailPage extends StatelessWidget {
                                 TextSpan(
                                   text:
                                       '\t\t${mutable.allProducts[index].dimensions.width}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
-                                TextSpan(
+                                const TextSpan(
                                   text: '\nHeight\t\t',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -210,10 +213,10 @@ class DetailPage extends StatelessWidget {
                                 TextSpan(
                                   text:
                                       '\t\t${mutable.allProducts[index].dimensions.height}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
-                                TextSpan(
+                                const TextSpan(
                                   text: '\nDepth\t\t',
                                   style: TextStyle(
                                     color: Colors.black,
@@ -223,10 +226,10 @@ class DetailPage extends StatelessWidget {
                                 TextSpan(
                                   text:
                                       '\t\t${mutable.allProducts[index].dimensions.depth}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16, color: Colors.grey),
                                 ),
-                                TextSpan(
+                                const TextSpan(
                                   text: '\n\nReview ⭐',
                                   style: TextStyle(
                                       fontSize: 18,
@@ -239,7 +242,7 @@ class DetailPage extends StatelessWidget {
                           ...List.generate(
                             mutable.allProducts[index].reviews.length,
                             (i) => ListTile(
-                              leading: CircleAvatar(
+                              leading: const CircleAvatar(
                                 maxRadius: 50,
                                 child: Icon(Icons.person),
                               ),
@@ -303,6 +306,10 @@ class DetailPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           mutable.cartProducts.contains(mutable.allProducts[index])
+              ? mutable.cartProducts.remove(mutable.allProducts[index])
+              : mutable.cartProducts.add(mutable.allProducts[index]);
+
+          mutable.cartProducts.contains(mutable.allProducts[index])
               ? ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text('Remove from Cart!'),
                   backgroundColor: Colors.red,
@@ -313,9 +320,6 @@ class DetailPage extends StatelessWidget {
                     backgroundColor: Colors.green,
                   ),
                 );
-          mutable.cartProducts.contains(mutable.allProducts[index])
-              ? mutable.cartProducts.remove(mutable.allProducts[index])
-              : mutable.cartProducts.add(mutable.allProducts[index]);
           mutable.notify();
         },
         label: Text(

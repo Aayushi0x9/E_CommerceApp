@@ -11,6 +11,9 @@ class ProductController extends ChangeNotifier {
   List<Product> cartProducts = [];
 
   List<Product> likedProducts = [];
+  double discount = 0.0;
+  double totalPrice = 0.0;
+  double subtotalPrice = 0.0;
 
   ProductController() {
     loadAllProductData();
@@ -19,6 +22,33 @@ class ProductController extends ChangeNotifier {
   Future<void> loadAllProductData() async {
     allProducts = await ProductHelper.productHelper.getAllProduct();
     notifyListeners();
+  }
+
+  double totalProductPrice() {
+    totalPrice = 0.0;
+    cartProducts.forEach((element) {
+      discount = (element.price * (element.discountPercentage ?? 0.0)) / 100;
+      totalPrice += (element.price - discount) * element.qty;
+    });
+    return totalPrice;
+  }
+
+  double allProductPrice() {
+    subtotalPrice = 0.0;
+    cartProducts.forEach((element) {
+      subtotalPrice += (element.price * element.qty);
+    });
+    return subtotalPrice;
+  }
+
+  double totalDiscount() {
+    discount = 0.0;
+    cartProducts.forEach((element) {
+      discount += (element.qty *
+          (element.price * (element.discountPercentage ?? 0.0)) /
+          100);
+    });
+    return discount;
   }
 
   void notify() {
